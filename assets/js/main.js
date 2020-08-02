@@ -12,11 +12,13 @@ jQuery(document).ready(function ($) {
           jQuery(".show-content").html(response.data);
         }
         else {
-          alert("Your like could not be added");
+          // handle condition
+          // console.log(response);
         }
       },
       error: function (error) {
-        console.log(error);
+        // handle condition
+        // console.log(error);
       }
     });
   });

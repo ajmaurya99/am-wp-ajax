@@ -47,4 +47,3 @@ if (!defined('AMWPAJAX_PLUGIN_FILE')) {
 
 // Load the main plugin class
 require_once(AMWPAJAX_PLUGIN_DIR . 'includes/class-am-wp-ajax.php');
-// require_once(AMWPAJAX_PLUGIN_DIR . 'includes/init-am-wp-ajax.php');
