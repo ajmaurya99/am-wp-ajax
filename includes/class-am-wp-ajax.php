@@ -9,6 +9,7 @@ if (!class_exists('AM_WP_AJAX')) :
 
   class AM_WP_AJAX
   {
+    protected $endpoint = 'https://miusage.com/v1/challenge/1/';
 
     public function __construct()
     {
@@ -58,6 +59,11 @@ if (!class_exists('AM_WP_AJAX')) :
           }
         }
       }
+
+      /**
+       *  Load plugin textdomain.
+       **/
+      add_action('admin_init', array($this, 'am_wp_ajax_load_textdomain'));
     }
 
     // Called on plugin activation
@@ -117,16 +123,17 @@ if (!class_exists('AM_WP_AJAX')) :
       // Get users data
       $users_data = $this->get_table();
 
-      echo '<div class="wrap">';
-      echo '<h1>AM WP Plugin</h1>';
-      echo ' <table class="form-table">';
-      echo '<tr valign="top">';
-      echo '<th scope="row">' . $this->get_title() . '</th>'; // Dynamic title
-      echo '<td class="show-content">';
-      echo $users_data;
-      echo '</td>';
-      echo ' </tr>';
-      echo ' </table>';
+      $options_page_html = '<div class="wrap">';
+      $options_page_html .= '<h1>' . esc_html(__('AM WP AJAX', 'am_wp_ajax')) . '</h1>';
+      $options_page_html .= '<table class="form-table">';
+      $options_page_html .= '<tr valign="top">';
+      $options_page_html .= '<th scope="row">' . $this->get_title() . '</th>'; // Dynamic title
+      $options_page_html .= '<td class="show-content">';
+      $options_page_html .= $users_data;
+      $options_page_html .= '</td>';
+      $options_page_html .= '</tr>';
+      $options_page_html .= '</table>';
+      echo $options_page_html;
       $other_attributes = array('id' => 'get-ajax-data');
       submit_button(__('Refresh Data', 'am_wp_ajax'), 'primary', '', true, $other_attributes);
       echo '</div>';
@@ -160,7 +167,7 @@ if (!class_exists('AM_WP_AJAX')) :
       // Get any existing copy of our transient data
       if (false === ($response = get_transient('am_wp_ajax_miusage_data'))) {
         // Transient expired, refresh the data
-        $response = wp_remote_get('https://miusage.com/v1/challenge/1/');
+        $response = wp_remote_get($this->endpoint);
         set_transient('am_wp_ajax_miusage_data', $response, 60 * 60);
       }
 
@@ -217,8 +224,8 @@ if (!class_exists('AM_WP_AJAX')) :
       }
 
       delete_transient('am_wp_ajax_miusage_data');
-      // $this->get_table();
-      WP_CLI::success('New data is being fetched from https://miusage.com/v1/challenge/1/');
+      $this->get_table();
+      WP_CLI::success('New data is being fetched from' . $this->endpoint . '');
     }
 
     public function get_title()
@@ -232,7 +239,7 @@ if (!class_exists('AM_WP_AJAX')) :
     public function show_notice_success()
     {
       $notice  = '<div class="notice notice-success">';
-      $notice .= '<p>This date is served from cache!</p>';
+      $notice .= '<p>' . esc_html(__('This data is served from cache!', 'text_domain')) . '</p>';
       $notice .= '</div>';
 
       echo $notice;
@@ -241,10 +248,18 @@ if (!class_exists('AM_WP_AJAX')) :
     public function show_notice_error()
     {
       $notice  = '<div class="notice notice-error">';
-      $notice .= '<p>The cache has expired, Please refresh the data!</p>';
+      $notice .= '<p>' . esc_html(__('The cache has expired, Please refresh the data!', 'text_domain')) . '</p>';
       $notice .= '</div>';
 
       echo $notice;
+    }
+
+    /**
+     *  Load plugin textdomain.
+     **/
+    public function am_wp_ajax_load_textdomain()
+    {
+      load_plugin_textdomain('am_wp_ajax', false, AMWPAJAX_PLUGIN_DIR . '/languages');
     }
   }
 
@@ -261,4 +276,7 @@ register_uninstall_hook(AMWPAJAX_PLUGIN_FILE, $am_wp_ajax->uninstall());
  * CSS
  * Heaading and desc
  * admin notices logic
+ * localization
+ * phpcs
+ * make endpoint protected]
  */
