@@ -20,30 +20,30 @@
  * Domain Path:       /languages
  */
 
-// Exit if accessed directly
-if (!defined('ABSPATH')) {
-  exit;
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
 // Plugin version.
-if (!defined('AMWPAJAX_VERSION')) {
-  define('AMWPAJAX_VERSION', '1.0.0');
+if ( ! defined( 'AMWPAJAX_VERSION' ) ) {
+	define( 'AMWPAJAX_VERSION', '1.0.0' );
 }
 
 // Plugin Folder Path.
-if (!defined('AMWPAJAX_PLUGIN_DIR')) {
-  define('AMWPAJAX_PLUGIN_DIR', plugin_dir_path(__FILE__));
+if ( ! defined( 'AMWPAJAX_PLUGIN_DIR' ) ) {
+	define( 'AMWPAJAX_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 }
 
 // Plugin Folder URL.
-if (!defined('AMWPAJAX_PLUGIN_URL')) {
-  define('AMWPAJAX_PLUGIN_URL', plugin_dir_url(__FILE__));
+if ( ! defined( 'AMWPAJAX_PLUGIN_URL' ) ) {
+	define( 'AMWPAJAX_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 }
 
 // Plugin Root File.
-if (!defined('AMWPAJAX_PLUGIN_FILE')) {
-  define('AMWPAJAX_PLUGIN_FILE', __FILE__);
+if ( ! defined( 'AMWPAJAX_PLUGIN_FILE' ) ) {
+	define( 'AMWPAJAX_PLUGIN_FILE', __FILE__ );
 }
 
-// Load the main plugin class
-require_once(AMWPAJAX_PLUGIN_DIR . 'includes/class-am-wp-ajax.php');
+// Load the main plugin class.
+require_once AMWPAJAX_PLUGIN_DIR . 'includes/class-am-wp-ajax.php';
