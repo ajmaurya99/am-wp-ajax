@@ -3,7 +3,9 @@
 /**
  * @file
  * This is the plugins main file, all logic resides here.
- * @package AM WP AJAX
+ *
+ * @package am_wp_ajax
+ * @since   1.0.0
  */
 
 /**
@@ -18,11 +20,14 @@ if ( ! class_exists( 'AM_WP_AJAX' ) ) :
 		 * Data endpoint.
 		 *
 		 * @var Endpoint $endpoint
+		 * @since   1.0.0
 		 */
 		protected $endpoint = 'https://miusage.com/v1/challenge/1/';
 
 		/**
-		 * Default __construct initializes plugins settings
+		 * Construct the AM_WP_AJAX class.
+		 *
+		 * @since   1.0.0
 		 */
 		public function __construct() {
 			// Enqueue the admin scripts.
@@ -35,6 +40,8 @@ if ( ! class_exists( 'AM_WP_AJAX' ) ) :
 
 		/**
 		 * Load admin assets
+		 *
+		 * @since   1.0.0
 		 */
 		public function admin_assets() {
 			// Detect current page.
@@ -83,14 +90,14 @@ if ( ! class_exists( 'AM_WP_AJAX' ) ) :
 				}
 			}
 
-			/**
-			 *  Load plugin textdomain.
-			 */
+			// Load plugin textdomain.
 			add_action( 'admin_init', array( $this, 'am_wp_ajax_load_textdomain' ) );
 		}
 
 		/**
 		 * Called on plugin activation
+		 *
+		 * @since   1.0.0
 		 */
 		public function activate() {
 			// Hook settings.
@@ -115,6 +122,8 @@ if ( ! class_exists( 'AM_WP_AJAX' ) ) :
 
 		/**
 		 * Called on plugin deactivation
+		 *
+		 * @since   1.0.0
 		 */
 		public function deactivate() {
 			// Delete settings on plugin deactivate.
@@ -123,6 +132,8 @@ if ( ! class_exists( 'AM_WP_AJAX' ) ) :
 
 		/**
 		 * Called on plugin uninstalled / delete
+		 *
+		 * @since   1.0.0
 		 */
 		public function uninstall() {
 			// Delete settings on plugin uninstall.
@@ -131,6 +142,8 @@ if ( ! class_exists( 'AM_WP_AJAX' ) ) :
 
 		/**
 		 * Regsiter plugin settings
+		 *
+		 * @since   1.0.0
 		 */
 		public function am_wp_ajax_register_settings() {
 			register_setting( 'am_wp_ajax_options_group', 'am_wp_ajax_option_name' );
@@ -139,6 +152,8 @@ if ( ! class_exists( 'AM_WP_AJAX' ) ) :
 
 		/**
 		 * Add plugin options page
+		 *
+		 * @since   1.0.0
 		 */
 		public function am_wp_ajax_register_options_page() {
 			add_options_page( __( 'AM WP AJAX', 'am_wp_ajax' ), __( 'AM WP AJAX Options', 'am_wp_ajax' ), 'manage_options', 'am-wp-ajax', array( $this, 'am_wp_ajax_options_page' ) );
@@ -146,6 +161,8 @@ if ( ! class_exists( 'AM_WP_AJAX' ) ) :
 
 		/**
 		 * Settings section
+		 *
+		 * @since   1.0.0
 		 */
 		public function am_wp_ajax_settings_cb() {
 			echo esc_html__( 'Developer Applicant Challenge.', 'am_wp_ajax' );
@@ -153,6 +170,8 @@ if ( ! class_exists( 'AM_WP_AJAX' ) ) :
 
 		/**
 		 * Plugins settings page content
+		 *
+		 * @since   1.0.0
 		 */
 		public function am_wp_ajax_options_page() {        ?>
 
@@ -187,6 +206,8 @@ if ( ! class_exists( 'AM_WP_AJAX' ) ) :
 
 		/**
 		 * Function called on "Refresh" button clicked via Ajax
+		 *
+		 * @since   1.0.0
 		 */
 		public function get_miusage_data() {
 			// Nonce Check.
@@ -210,6 +231,10 @@ if ( ! class_exists( 'AM_WP_AJAX' ) ) :
 
 		/**
 		 * Display data in table format
+		 *
+		 * @since   1.0.0
+		 *
+		 * @return table HTML
 		 */
 		public function get_table() {
 			// Get any existing copy of our transient data.
@@ -269,6 +294,8 @@ if ( ! class_exists( 'AM_WP_AJAX' ) ) :
 
 		/**
 		 * Delete the transient value and fetch new value from the endpoint.
+		 *
+		 * @since   1.0.0
 		 */
 		public function get_new_data() {
 			// This function can only be accessed via CLI.
@@ -283,6 +310,10 @@ if ( ! class_exists( 'AM_WP_AJAX' ) ) :
 
 		/**
 		 * Get title value from the given endpoint
+		 *
+		 * @since   1.0.0
+		 *
+		 * @return string title
 		 */
 		public function get_title() {
 			$response = get_transient( 'am_wp_ajax_miusage_data' );
@@ -293,6 +324,8 @@ if ( ! class_exists( 'AM_WP_AJAX' ) ) :
 
 		/**
 		 * Show success admin notice
+		 *
+		 * @since   1.0.0
 		 */
 		public function show_notice_success() {
 			$notice  = '<div class="notice notice-success">';
@@ -304,6 +337,8 @@ if ( ! class_exists( 'AM_WP_AJAX' ) ) :
 
 		/**
 		 * Show error admin notice
+		 *
+		 * @since   1.0.0
 		 */
 		public function show_notice_error() {
 			$notice  = '<div class="notice notice-error">';
@@ -315,6 +350,8 @@ if ( ! class_exists( 'AM_WP_AJAX' ) ) :
 
 		/**
 		 * Load plugin textdomain.
+		 *
+		 * @since   1.0.0
 		 */
 		public function am_wp_ajax_load_textdomain() {
 			load_plugin_textdomain( 'am_wp_ajax', false, AMWPAJAX_PLUGIN_DIR . '/languages' );
@@ -329,8 +366,3 @@ $am_wp_ajax = new AM_WP_AJAX();
 register_activation_hook( AMWPAJAX_PLUGIN_FILE, $am_wp_ajax->activate() );
 register_deactivation_hook( AMWPAJAX_PLUGIN_FILE, $am_wp_ajax->deactivate() );
 register_uninstall_hook( AMWPAJAX_PLUGIN_FILE, $am_wp_ajax->uninstall() );
-
-/**
- * admin notices logic
- * phpcs
- */
