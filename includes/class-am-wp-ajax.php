@@ -258,7 +258,7 @@ if ( ! class_exists( 'AM_WP_AJAX' ) ) :
 				$result .= '<thead>';
 				$result .= '<tr valign="top">';
 				foreach ( $headers as $header ) {
-					$result .= '<th>' . $header . '</th>';
+					$result .= '<th>' . esc_attr( $header ) . '</th>';
 				}
 				$result .= '</tr>';
 				$result .= '</thead>';
@@ -269,18 +269,22 @@ if ( ! class_exists( 'AM_WP_AJAX' ) ) :
 				 *
 				 * @param int $a
 				 * @param int $b
+				 * @return int greater number
 				 */
 				function cmp( $a, $b ) {
-					return strcmp( $a['id'], $b['id'] );
+					if ( $a == $b ) {
+						return 0;
+					}
+					return ( $a < $b ) ? -1 : 1;
 				}
 
 				usort( $users, 'cmp' );
 				foreach ( $users as $user ) {
 					$result .= '<tr valign="top">';
-					$result .= '<td>' . $user['id'] . '</td>';
-					$result .= '<td>' . $user['fname'] . '</td>';
-					$result .= '<td>' . $user['lname'] . '</td>';
-					$result .= '<td>' . $user['email'] . '</td>';
+					$result .= '<td>' . esc_attr( $user['id'] ) . '</td>';
+					$result .= '<td>' . esc_attr( $user['fname'] ) . '</td>';
+					$result .= '<td>' . esc_attr( $user['lname'] ) . '</td>';
+					$result .= '<td>' . esc_attr( $user['email'] ) . '</td>';
 					$result .= '<td>' . date_i18n( 'F d, Y', $user['date'] ) . '</td>';
 					$result .= '</tr>';
 				}
@@ -305,7 +309,7 @@ if ( ! class_exists( 'AM_WP_AJAX' ) ) :
 
 			delete_transient( 'am_wp_ajax_miusage_data' );
 			$this->get_table();
-			WP_CLI::success( 'New data is being fetched from' . $this->endpoint . '' );
+			WP_CLI::success( 'New data is being fetched from: ' . esc_url( $this->endpoint ) . '' );
 		}
 
 		/**
