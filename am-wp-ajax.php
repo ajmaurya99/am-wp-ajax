@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The Awesome Motive -  Developer Applicant Challenge
  *
@@ -12,6 +11,7 @@
  * Plugin URI:        https://awesomemotive.com
  * Description:       The Awesome Motive -  Developer Applicant Challenge
  * Version:           1.0.0
+ * Requires PHP:      5.6.0
  * Author:            Ajay Maurya
  * Author URI:        https://awesomemotive.com
  * License:           GPL-2.0+
@@ -45,14 +45,22 @@ if ( ! defined( 'AMWPAJAX_PLUGIN_FILE' ) ) {
 	define( 'AMWPAJAX_PLUGIN_FILE', __FILE__ );
 }
 
-	// If the file exists, require it.
-if ( is_readable( AMWPAJAX_PLUGIN_DIR . 'vendor/autoload.php' ) ) {
-  require_once AMWPAJAX_PLUGIN_DIR . 'vendor/autoload.php';
+// Minimum PHP Version
+if ( ! defined( 'MIN_PHP_VER' ) ) {
+	define( 'MIN_PHP_VER', '5.6.0' );
 }
 
+	// If the file exists, require it.
+if ( is_readable( AMWPAJAX_PLUGIN_DIR . 'vendor/autoload.php' ) ) {
+	require_once AMWPAJAX_PLUGIN_DIR . 'vendor/autoload.php';
+}
+
+
+// NameSpace decleration.
 use AmWPAjax\Admin as Admin;
 use AmWPAjax\Frontend;
 
+// Create main class object to register activation and deactivation hooks.
 $am_wp_ajax = new Admin \AM_WP_AJAX();
 
 register_activation_hook( AMWPAJAX_PLUGIN_FILE, $am_wp_ajax->activate() );
