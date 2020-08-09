@@ -45,5 +45,16 @@ if ( ! defined( 'AMWPAJAX_PLUGIN_FILE' ) ) {
 	define( 'AMWPAJAX_PLUGIN_FILE', __FILE__ );
 }
 
-// Load the main plugin class.
-require_once AMWPAJAX_PLUGIN_DIR . 'includes/class-am-wp-ajax.php';
+	// If the file exists, require it.
+if ( is_readable( AMWPAJAX_PLUGIN_DIR . 'vendor/autoload.php' ) ) {
+  require_once AMWPAJAX_PLUGIN_DIR . 'vendor/autoload.php';
+}
+
+use AmWPAjax\Admin as Admin;
+use AmWPAjax\Frontend;
+
+$am_wp_ajax = new Admin \AM_WP_AJAX();
+
+register_activation_hook( AMWPAJAX_PLUGIN_FILE, $am_wp_ajax->activate() );
+register_deactivation_hook( AMWPAJAX_PLUGIN_FILE, $am_wp_ajax->deactivate() );
+register_uninstall_hook( AMWPAJAX_PLUGIN_FILE, $am_wp_ajax->uninstall() );
