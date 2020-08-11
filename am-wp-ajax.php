@@ -61,7 +61,6 @@ if ( is_readable( AMWPAJAX_PLUGIN_DIR . 'vendor/autoload.php' ) ) {
 use AmWPAjax\Admin as Admin;
 use AmWPAjax\Frontend;
 use AmWPAjax\Admin\Get_Data;
-use AmWPAjax\Admin\Cli;
 
 // Create main class object to register activation and deactivation hooks.
 $am_wp_ajax = new Admin\AM_WP_AJAX();
@@ -78,6 +77,11 @@ register_uninstall_hook( AMWPAJAX_PLUGIN_FILE, $am_wp_ajax->uninstall() );
  * */
 
 
+	/**
+		 * Delete the transient value and fetch new value from the endpoint.
+		 *
+		 * @since   1.0.0
+		 */
  $cli = function () {
 	// This function can only be accessed via CLI.
 	if ( ! defined( 'WP_CLI' ) ) {
@@ -94,8 +98,10 @@ register_uninstall_hook( AMWPAJAX_PLUGIN_FILE, $am_wp_ajax->uninstall() );
 };
 
 	/**
-	 * Cli add command to fetch new data.
-	 */
+		 * Add's the WP_CLI command to fetch new data.
+		 *
+		 * @since   1.0.0
+		 */
 	if ( class_exists( 'WP_CLI' ) ) { // execute only if ran via command line.
 		if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 			WP_CLI::add_command( 'am-wp-ajax-reset', $cli );

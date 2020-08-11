@@ -8,7 +8,6 @@ use AmWPAjax\Admin\Scripts; // Load Scripts Class.
 use AmWPAjax\Admin\Refresh_Data; // Load Refresh_Data Class.
 use AmWPAjax\Admin\Admin_Notices; // Load Admin_Notices Class.
 use AmWPAjax\Admin\Text_Domain; // Load Text_Domain Class.
-use AmWPAjax\Admin\Cli; // Load Cli Class.
 use AmWPAjax\Frontend\Shortcode; // Load Shortcode Class.
 
 /**
@@ -81,7 +80,6 @@ if ( ! class_exists( 'Admin_Menu' ) ) :
 			// Register Shortcode.
 			( new Shortcode() )->load_shortcode();
 
-			// (new Cli())->refresh_data_using_cli();
 		}
 
 		/**
