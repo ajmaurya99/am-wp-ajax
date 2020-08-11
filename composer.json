@@ -1,0 +1,12 @@
+{
+  "autoload": {
+    "psr-4": {
+      "AmWPAjax\\Admin\\": [
+        "src/Admin"
+      ],
+      "AmWPAjax\\Frontend\\": [
+        "src/Frontend"
+      ]
+    }
+  }
+}

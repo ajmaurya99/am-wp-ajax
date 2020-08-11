@@ -12,6 +12,7 @@
  * Plugin URI:        https://awesomemotive.com
  * Description:       The Awesome Motive -  Developer Applicant Challenge
  * Version:           1.0.0
+ * Requires PHP:      5.6.0
  * Author:            Ajay Maurya
  * Author URI:        https://awesomemotive.com
  * License:           GPL-2.0+
@@ -45,5 +46,65 @@ if ( ! defined( 'AMWPAJAX_PLUGIN_FILE' ) ) {
 	define( 'AMWPAJAX_PLUGIN_FILE', __FILE__ );
 }
 
-// Load the main plugin class.
-require_once AMWPAJAX_PLUGIN_DIR . 'includes/class-am-wp-ajax.php';
+// Minimum PHP Version
+if ( ! defined( 'MIN_PHP_VER' ) ) {
+	define( 'MIN_PHP_VER', '5.6.0' );
+}
+
+// If the file exists, require it.
+if ( is_readable( AMWPAJAX_PLUGIN_DIR . 'vendor/autoload.php' ) ) {
+	require_once AMWPAJAX_PLUGIN_DIR . 'vendor/autoload.php';
+}
+
+
+// NameSpace decleration.
+use AmWPAjax\Admin as Admin;
+use AmWPAjax\Frontend;
+use AmWPAjax\Admin\Get_Data;
+
+// Create main class object to register activation and deactivation hooks.
+$am_wp_ajax = new Admin\AM_WP_AJAX();
+
+register_activation_hook( AMWPAJAX_PLUGIN_FILE, $am_wp_ajax->activate() );
+register_deactivation_hook( AMWPAJAX_PLUGIN_FILE, $am_wp_ajax->deactivate() );
+register_uninstall_hook( AMWPAJAX_PLUGIN_FILE, $am_wp_ajax->uninstall() );
+
+
+/**
+ * CLI Command to get new data
+ * source ~/.bash_profile
+ * wp am-wp-ajax-reset
+ * */
+
+
+	/**
+		 * Delete the transient value and fetch new value from the endpoint.
+		 *
+		 * @since   1.0.0
+		 */
+ $cli = function () {
+	// This function can only be accessed via CLI.
+	if ( ! defined( 'WP_CLI' ) ) {
+		return;
+	}
+
+	// Delete the saved transient data.
+	delete_transient( 'am_wp_ajax_miusage_data' );
+	// Fetch new data from the endpoint.
+	$get_new_data = ( new Get_Data() );
+	$get_new_data->display_table();
+
+	WP_CLI::success( 'New data is being fetched from: ' . esc_url( $get_new_data->getEndpoint() ) . '' );
+};
+
+	/**
+		 * Add's the WP_CLI command to fetch new data.
+		 *
+		 * @since   1.0.0
+		 */
+	if ( class_exists( 'WP_CLI' ) ) { // execute only if ran via command line.
+		if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
+			WP_CLI::add_command( 'am-wp-ajax-reset', $cli );
+		}
+	}
+
