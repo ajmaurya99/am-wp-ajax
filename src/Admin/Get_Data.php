@@ -104,6 +104,12 @@ if ( ! class_exists( 'Get_Data' ) ) :
 				return json_decode( wp_remote_retrieve_body( $response ), true )['title'];
 			}
 		}
+
+		/**
+		 * Getter Function to get the endpoint value outside the class.
+		 */
+		public function getEndpoint() {
+			return $this->endpoint; }
 	}
 
 endif;

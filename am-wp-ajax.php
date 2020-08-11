@@ -70,33 +70,35 @@ register_activation_hook( AMWPAJAX_PLUGIN_FILE, $am_wp_ajax->activate() );
 register_deactivation_hook( AMWPAJAX_PLUGIN_FILE, $am_wp_ajax->deactivate() );
 register_uninstall_hook( AMWPAJAX_PLUGIN_FILE, $am_wp_ajax->uninstall() );
 
-// Cli Class
-// $cli= new Admin \Cli();
-
 
 /**
  * CLI Command to get new data
  * source ~/.bash_profile
  * wp am-wp-ajax-reset
  * */
-/*
+
+
  $cli = function () {
-  // This function can only be accessed via CLI.
-  if (!defined('WP_CLI')) {
-	return;
-  }
+	// This function can only be accessed via CLI.
+	if ( ! defined( 'WP_CLI' ) ) {
+		return;
+	}
 
-  // Delete the saved transient data.
-  delete_transient('am_wp_ajax_miusage_data');
-  // Fetch new data from the endpoint.
-  $get_new_data = (new Get_Data());
-  $get_new_data->display_table();
+	// Delete the saved transient data.
+	delete_transient( 'am_wp_ajax_miusage_data' );
+	// Fetch new data from the endpoint.
+	$get_new_data = ( new Get_Data() );
+	$get_new_data->display_table();
 
-  WP_CLI::success('New data is being fetched from: ');
+	WP_CLI::success( 'New data is being fetched from: ' . esc_url( $get_new_data->getEndpoint() ) . '' );
 };
 
+	/**
+	 * Cli add command to fetch new data.
+	 */
+	if ( class_exists( 'WP_CLI' ) ) { // execute only if ran via command line.
+		if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
+			WP_CLI::add_command( 'am-wp-ajax-reset', $cli );
+		}
+	}
 
-if (is_admin() || (defined('WP_CLI') && WP_CLI)) {
-  WP_CLI::add_command('am-wp-ajax-reset', $cli);
-}
-*/
