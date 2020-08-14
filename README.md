@@ -1,6 +1,6 @@
 # [WordPress] AM WP AJAX
 
-Awesome Motive - Developer Applicant Challenge.
+Challenge: API Based Plugin
 
 ## Installation
 
