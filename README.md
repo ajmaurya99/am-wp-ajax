@@ -9,7 +9,13 @@ Download the zip, Install and activate it as a normal WordPress Plugin.
 ## CLI command to refresh data
 
 ```php
-    'wp am-wp-ajax-reset';
+  'wp am-wp-ajax-reset';
+```
+
+## Shortcode to display table in frontend
+
+```php
+  [amwpajax];
 ```
 
 ## Working
