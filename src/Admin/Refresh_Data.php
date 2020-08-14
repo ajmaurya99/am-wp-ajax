@@ -27,6 +27,11 @@ if ( ! class_exists( 'Refresh_Data' ) ) :
 				}
 			}
 
+			/**
+			 * Delete the transient cache if refresh dataa button is pressed.
+			 */
+			delete_transient( 'am_wp_ajax_miusage_data' );
+
 			// get the data in table format.
 			$table_response = ( new Get_Data() )->display_table();
 

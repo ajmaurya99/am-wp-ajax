@@ -3,8 +3,8 @@
 // Current class namespace.
 namespace AmWPAjax\Admin;
 
-// Load Admin_Menu Class.
-use AmWPAjax\Admin\Admin_Menu;
+use AmWPAjax\Admin\Admin_Menu; // Load Admin_Menu Class.
+use AmWPAjax\Admin\Settings_Link; // Load Settings_Link Class.
 
 /**
  * Class AM_WP_AJAX contains all the activation and deactivation hooks.
@@ -23,6 +23,7 @@ if ( ! class_exists( 'AM_WP_AJAX' ) ) :
 		public function activate() {
 			// create_admin_menu add the admin menu after the plugin activation.
 			( new Admin_Menu() )->create_admin_menu();  // error calling 3 times.
+			( new Settings_Link() ); // add plugins settings link.
 		}
 
 		/**

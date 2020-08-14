@@ -30,10 +30,15 @@ if ( ! class_exists( 'Options_Page' ) ) :
 			?>
 
 	  <div class="wrap">
+   <!-- Add Logo Here -->
+		<div id="am-wp-ajax-header">
+			<img class="am-wp-ajax-header-logo" src="<?php echo esc_url( 'https://s.w.org/style/images/about/WordPress-logotype-standard.png' ); ?>" alt="AM WP AJAX"/>
+		</div>
+
 		<h1><?php esc_html( __( 'AM WP AJAX', 'am_wp_ajax' ) ); ?></h1>
 			<?php settings_fields( 'am_wp_ajax_options_group' ); ?>
 			<?php do_settings_sections( 'am-wp-ajax-settings' ); ?>
-		<h2><?php esc_html_e( 'Users Table', 'am_wp_ajax' ); ?></h2>
+		<div id="am-wp-ajax-content-wrapper">
 		<table class="form-table">
 		  <tr valign="top">
 			<th scope="row"><?php echo esc_html__( $title, 'am_wp_ajax' ); ?></th>
@@ -43,10 +48,11 @@ if ( ! class_exists( 'Options_Page' ) ) :
 				?>
 			</td>
 		  </tr>
-		</table>
+	</table>
+	</div>
 			<?php
 			$other_attributes = array( 'id' => 'get-ajax-data' );
-			submit_button( __( 'Refresh Data', 'am_wp_ajax' ), 'primary', '', true, $other_attributes );
+			submit_button( __( 'Refresh Data', 'am_wp_ajax' ), 'primary get-ajax-data', '', true, $other_attributes );
 			?>
 	  </div>
 

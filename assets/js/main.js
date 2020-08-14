@@ -1,5 +1,9 @@
+/**
+ * Plugin script file.
+ * Below ajax call is made once we click on the refresh data button.
+ */
 jQuery(document).ready(function ($) {
-  jQuery('#get-ajax-data').on('click', function () {
+  jQuery('.get-ajax-data').on('click', function () {
 
     jQuery.ajax({
       type: "get",
@@ -12,12 +16,10 @@ jQuery(document).ready(function ($) {
           jQuery(".show-content").html(response.data);
         }
         else {
-          // handle condition
           // console.log(response);
         }
       },
       error: function (error) {
-        // handle condition
         // console.log(error);
       }
     });

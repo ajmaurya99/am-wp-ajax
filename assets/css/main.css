@@ -1,9 +1,23 @@
-table.am-wp-ajax-table th,
+#am-wp-ajax-content-wrapper table.am-wp-ajax-table th,
 table.am-wp-ajax-table td {
   border: 1px solid black;
 }
 
-table.am-wp-ajax-table th {
+#am-wp-ajax-content-wrapper table.am-wp-ajax-table th {
   padding: 15px 10px;
   background: #dfdfdf;
+}
+
+#am-wp-ajax-header img {
+  display: block;
+  margin: 0;
+  max-width: 250px;
+  height: auto;
+}
+
+#am-wp-ajax-content-wrapper {
+  border-bottom: 1px solid #e4e4e4;
+  padding: 30px 0;
+  font-size: 14px;
+  line-height: 1.3;
 }

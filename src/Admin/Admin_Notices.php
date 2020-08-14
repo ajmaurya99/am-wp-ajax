@@ -40,8 +40,22 @@ if ( ! class_exists( 'Admin_Notices' ) ) :
 		 * @since   1.0.0
 		 */
 		public function show_notice_success() {
-			$notice  = '<div class="notice notice-success">';
-			$notice .= '<p>' . esc_html( __( 'This data is served from cache!', 'am_wp_ajax' ) ) . '</p>';
+			$notice = '<div class="notice notice-success is-dismissible">';
+
+			$notice .= '<p>' . sprintf(
+				wp_kses( /* translators: %s - Refresh Data  anchor link. */
+					__( 'The below data is fetched from cache and will be refreshed every one hour!, <strong>Click to fetch new data. <a class="get-ajax-data" href="%s">Refresh Data</a></strong>.', 'wp-mail-smtp' ),
+					array(
+						'a'      => array(
+							'href'  => array(),
+							'class' => array(),
+						),
+						'strong' => array(),
+					)
+				),
+				'javascript:void(0)'
+			) . '</p>';
+
 			$notice .= '</div>';
 
 			echo $notice;
@@ -53,8 +67,22 @@ if ( ! class_exists( 'Admin_Notices' ) ) :
 		 * @since   1.0.0
 		 */
 		public function show_notice_error() {
-			$notice  = '<div class="notice notice-error">';
-			$notice .= '<p>' . esc_html( __( 'The cache has expired, Please refresh the data!', 'am_wp_ajax' ) ) . '</p>';
+
+			$notice = '<div class="notice notice-error is-dismissible">';
+
+			$notice .= '<p>' . sprintf(
+				wp_kses( /* translators: %s - Refresh Data  anchor link. */
+					__( 'The cache got expired and new data was fetched after an interval of one hour, <strong>Click to fetch new data. <a class="get-ajax-data" href="%s">Refresh Data</a></strong>.', 'wp-mail-smtp' ),
+					array(
+						'a'      => array(
+							'href'  => array(),
+							'class' => array(),
+						),
+						'strong' => array(),
+					)
+				),
+				'javascript:void(0)'
+			) . '</p>';
 			$notice .= '</div>';
 
 			echo $notice;

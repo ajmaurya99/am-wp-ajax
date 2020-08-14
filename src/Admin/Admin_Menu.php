@@ -27,12 +27,23 @@ if ( ! class_exists( 'Admin_Menu' ) ) :
 		 * @since   1.0.0
 		 */
 		public function __construct() {
+			// Detect current page.
+			global $pagenow;
+
 			// Object of class Scripts.
 			$scripts      = new Scripts();
 			$refresh_data = new Refresh_Data();
 
-			// Enqueue the admin scripts.
-			add_action( 'admin_enqueue_scripts', array( $scripts, 'load_scripts' ) );
+			/**
+			 * Load plugin scripts only if plugins settings page.
+			 */
+			if ( isset( $_GET['page'] ) ) {
+				// If plugin settings page.
+				if ( in_array( $pagenow, array( 'options-general.php' ) ) && ( $_GET['page'] == 'am-wp-ajax' ) ) {
+					// Enqueue the admin scripts.
+					add_action( 'admin_enqueue_scripts', array( $scripts, 'load_scripts' ) );
+				}
+			}
 
 			// Define Ajax.
 			add_action( 'wp_ajax_get_miusage_data', array( $refresh_data, 'get_miusage_data' ) );
@@ -98,7 +109,7 @@ if ( ! class_exists( 'Admin_Menu' ) ) :
 		 * @since   1.0.0
 		 */
 		public function am_wp_ajax_register_options_page() {
-			add_options_page( __( 'AM WP AJAX', 'am_wp_ajax' ), __( 'AM WP AJAX Options', 'am_wp_ajax' ), 'manage_options', 'am-wp-ajax', array( $this, 'am_wp_ajax_options_page' ) );
+			add_options_page( __( 'AM WP AJAX', 'am_wp_ajax' ), __( 'AM WP AJAX', 'am_wp_ajax' ), 'manage_options', 'am-wp-ajax', array( $this, 'am_wp_ajax_options_page' ) );
 		}
 
 
